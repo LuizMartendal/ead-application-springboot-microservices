@@ -1,7 +1,7 @@
 package com.ead.authuser.enums;
 
 public enum UserType {
-    USER,
+    STUDENT,
     ADMIN,
     INSTRUCTOR;
 }
