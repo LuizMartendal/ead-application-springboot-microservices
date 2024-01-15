@@ -6,6 +6,7 @@ import com.ead.course.models.ModuleModel;
 import com.ead.course.services.CourseService;
 import com.ead.course.services.ModuleService;
 import com.ead.course.specifications.SpecificationTemplate;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,6 +23,7 @@ import java.time.ZoneId;
 import java.util.Optional;
 import java.util.UUID;
 
+@Log4j2
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class ModuleController {
@@ -37,6 +39,7 @@ public class ModuleController {
             @RequestBody @Valid ModuleDto moduleDto,
             @PathVariable UUID courseId
     ) {
+        log.debug("POST saveModule moduleDto {} and courseId received {} ", moduleDto, courseId);
         Optional<CourseModel> courseModelOptional = courseService.findById(courseId);
         if (courseModelOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course not found!");
@@ -45,18 +48,24 @@ public class ModuleController {
         BeanUtils.copyProperties(moduleDto, moduleModel);
         moduleModel.setCourse(courseModelOptional.get());
         moduleModel.setCreationDate(LocalDateTime.now(ZoneId.of("UTC")));
-        return ResponseEntity.status(HttpStatus.CREATED).body(moduleService.save(moduleModel));
+        moduleService.save(moduleModel);
+        log.debug("POST saveModule moduleModel saved {} ", moduleModel.toString());
+        log.info("Module saved successfully moduleId {} ", moduleModel.getModuleId());
+        return ResponseEntity.status(HttpStatus.CREATED).body(moduleModel);
     }
 
     @DeleteMapping("/courses/{courseId}/modules/{moduleId}")
     public ResponseEntity<Object> deleteModule(
             @PathVariable UUID courseId, @PathVariable UUID moduleId
     ) {
+        log.debug("DELETE deleteModule courseId {} and moduleId received {} ", courseId, moduleId);
         Optional<ModuleModel> moduleModelOptional = moduleService.findModuleIntoCourse(courseId, moduleId);
         if (moduleModelOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Module not found for this course");
         }
         moduleService.delete(moduleModelOptional.get());
+        log.debug("DELETE deleteModule moduleId deleted {} ", moduleId);
+        log.info("Module deleted successfully moduleId {} ", moduleId);
         return ResponseEntity.status(HttpStatus.OK).body("Module deleted successfully");
     }
 
@@ -66,6 +75,7 @@ public class ModuleController {
             @PathVariable UUID moduleId,
             @RequestBody @Valid ModuleDto moduleDto
     ) {
+        log.debug("PUT updateModule courseId {} and moduleId {} and moduleDto received {} ", courseId, moduleId, moduleDto);
         Optional<ModuleModel> moduleModelOptional = moduleService.findModuleIntoCourse(courseId, moduleId);
         if (moduleModelOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Module not found for this course");
@@ -73,7 +83,10 @@ public class ModuleController {
         ModuleModel moduleModel = moduleModelOptional.get();
         moduleModel.setTitle(moduleDto.getTitle());
         moduleModel.setDescription(moduleDto.getDescription());
-        return ResponseEntity.status(HttpStatus.OK).body(moduleService.save(moduleModel));
+        moduleService.save(moduleModel);
+        log.debug("PUT updateModule moduleId updated {} ", moduleId);
+        log.info("Module updated successfully moduleId {} ", moduleId);
+        return ResponseEntity.status(HttpStatus.OK).body(moduleModel);
     }
 
     @GetMapping("/courses/{courseId}/modules")
@@ -82,6 +95,7 @@ public class ModuleController {
             @PageableDefault(page = 0, size = 10, sort = "moduleId", direction = Sort.Direction.ASC) Pageable pageable,
             SpecificationTemplate.ModuleSpec spec
     ) {
+        log.debug("GET getAllModules courseId {} and pageable {} and spec received {} ", courseId, pageable, spec);
         return ResponseEntity.status(HttpStatus.OK).body(moduleService.findAllByCourse(
                 SpecificationTemplate.moduleCourseId(courseId).and(spec), pageable));
     }
@@ -90,6 +104,7 @@ public class ModuleController {
     public ResponseEntity<Object> getOneModule(
             @PathVariable UUID courseId, @PathVariable UUID moduleId
     ) {
+        log.debug("GET getOneModule courseId {} and moduleId received {} ", courseId, moduleId);
         Optional<ModuleModel> moduleModelOptional = moduleService.findModuleIntoCourse(courseId, moduleId);
         if (moduleModelOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Course not found!");
