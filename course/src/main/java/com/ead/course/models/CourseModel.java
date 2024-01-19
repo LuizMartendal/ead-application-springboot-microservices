@@ -62,4 +62,8 @@ public class CourseModel implements Serializable {
     @Fetch(FetchMode.SUBSELECT)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<ModuleModel> modules;
+
+    public CourseUserModel convertToCourseUserModel(UUID userId) {
+        return new CourseUserModel(null, this, userId);
+    }
 }
