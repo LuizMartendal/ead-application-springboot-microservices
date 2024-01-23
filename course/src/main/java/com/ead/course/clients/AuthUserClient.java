@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -47,7 +48,7 @@ public class AuthUserClient {
             log.debug("Error request /users {} ", e);
         }
         log.info("Ending request /users courseId {} ", courseId);
-        return new PageImpl<>(searchResult);
+        return new PageImpl<>(searchResult != null ? searchResult : new ArrayList<>());
     }
 
     public ResponseEntity<UserDto> getOneUserById(UUID userId) {
@@ -61,5 +62,11 @@ public class AuthUserClient {
         courseUserDto.setCourseId(courseId);
         courseUserDto.setUserId(userId);
         restTemplate.postForEntity(url, courseUserDto, String.class);
+    }
+
+    public void deleteCourseInAuthUser(UUID courseId) {
+        String url = REQUEST_URL_AUTHUSER + "/users/courses/" + courseId;
+        restTemplate.exchange(url, HttpMethod.DELETE, null, String.class);
+
     }
 }
