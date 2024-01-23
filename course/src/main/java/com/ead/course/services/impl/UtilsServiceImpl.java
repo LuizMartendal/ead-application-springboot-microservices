@@ -11,7 +11,7 @@ import java.util.UUID;
 public class UtilsServiceImpl implements UtilsService {
 
     public String createUrlGetAllUsersByCourse(UUID courseId, Pageable pageable) {
-        return "/courses?userId=" + courseId + "&page=" + pageable.getPageNumber()
+        return "/users?courseId=" + courseId + "&page=" + pageable.getPageNumber()
                 + "&size=" + pageable.getPageSize() + "&sort=" + pageable.getSort().toString().replaceAll(": ", ",");
     }
 }

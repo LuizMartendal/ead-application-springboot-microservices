@@ -130,7 +130,7 @@ public class UserController {
             userModel.setImageUrl(userDto.getImageUrl());
             userModel.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC")));
             userService.save(userModel);
-            log.debug("PUT updateImage userModel saved {} ", userModel.toString());
+            //log.debug("PUT updateImage userModel saved {} ", userModel.toString());
             log.info("Image updated successfully userId {} ", userModel.getUserId());
             return ResponseEntity.status(HttpStatus.OK).body(userModel);
         }
