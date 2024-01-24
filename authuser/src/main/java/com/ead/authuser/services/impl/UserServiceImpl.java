@@ -1,12 +1,9 @@
 package com.ead.authuser.services.impl;
 
 import com.ead.authuser.clients.CourseClient;
-import com.ead.authuser.models.UserCourseModel;
 import com.ead.authuser.models.UserModel;
-import com.ead.authuser.repositories.UserCourseRepository;
 import com.ead.authuser.repositories.UserRepository;
 import com.ead.authuser.services.UserService;
-import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,9 +22,6 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     @Autowired
-    UserCourseRepository userCourseRepository;
-
-    @Autowired
     CourseClient courseClient;
 
     @Override
@@ -43,16 +37,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public void delete(UserModel userModel) {
-        boolean deleteUserCourseInCourse = false;
-        List<UserCourseModel> usersCourses = userCourseRepository.findAllUserCourseIntoUser(userModel.getUserId());
-        if (!usersCourses.isEmpty()) {
-            userCourseRepository.deleteAll(usersCourses);
-            deleteUserCourseInCourse = true;
-        }
         userRepository.delete(userModel);
-        if (deleteUserCourseInCourse) {
-            courseClient.deleteUserInCourse(userModel.getUserId());
-        }
     }
 
     @Override
