@@ -18,6 +18,8 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+  rabbitmq:
+    addresses: amqps://gwlhreha:kLcO6DOK_gD7I-6QO01Wswk2bsS-uoEF@rattlesnake.rmq.cloudamqp.com/gwlhreha
 
 logging:
   level:
@@ -30,6 +32,9 @@ ead:
   api:
     url:
       course: 'http://ead-course-service/ead-course'
+  broker:
+    exchange:
+      userEvent: ead.userevent
 
 eureka:
   client:
