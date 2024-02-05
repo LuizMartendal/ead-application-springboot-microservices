@@ -6,7 +6,13 @@
 spring:
   application:
     name: ead-authuser-service
-    
+  config:
+    import: 'configserver:'
+  cloud:
+    config:
+      discovery:
+        serviceId: ead-config-server
+        
 #  datasource:
 #    url: jdbc:postgresql://localhost:5432/ead-authuser-v2
 #    username: postgres
