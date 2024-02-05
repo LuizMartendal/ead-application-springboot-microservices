@@ -8,7 +8,7 @@ spring:
     config:
       server:
         git:
-          uri: https://github.com/LuizMartendal/EAD-Application-SpringBoot-Microservices
+          uri: 'https://github.com/LuizMartendal/EAD-Application-SpringBoot-Microservices'
           default-label: config-server
 
 eureka:
