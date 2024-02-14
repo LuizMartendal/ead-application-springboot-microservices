@@ -43,7 +43,7 @@ authuser:
 management:
   endpoints:
     web:
-      exponsure:
+      exposure:
         include:
           - refresh
           - health
