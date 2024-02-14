@@ -36,6 +36,18 @@ ead:
     exchange:
       userEvent: ead.userevent
 
+authuser:
+  refreshscope:
+    name: Luiz Henrique Martendal
+
+management:
+  endpoints:
+    web:
+      exponsure:
+        include:
+          - refresh
+          - health
+
 resilience4j:
   circuitbreaker:
     instances:
