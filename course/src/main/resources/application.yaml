@@ -1,0 +1,47 @@
+#server:
+#  port: 8082
+#  servlet:
+#    context-path: '/ead-course/'
+#
+spring:
+  application:
+    name: ead-course-service
+  config:
+    import: 'configserver:'
+  cloud:
+    config:
+      discovery:
+        serviceId: ead-config-server
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/ead-course-v2
+#    username: postgres
+#    password: root
+#    driver-class-name: org.postgresql.Driver
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    properties:
+#      hibernate:
+#        show_sql: true
+#        format_sql: true
+#  rabbitmq:
+#    addresses: amqps://gwlhreha:kLcO6DOK_gD7I-6QO01Wswk2bsS-uoEF@rattlesnake.rmq.cloudamqp.com/gwlhreha
+#
+#
+#ead:
+#  api:
+#    url:
+#      authuser: 'http://ead-authuser-service/ead-authuser'
+#  broker:
+#    exchange:
+#      userEventExchange: ead.userevent
+#    queue:
+#      userEventQueue:
+#        name: ead.userevent.ms.course
+#
+#eureka:
+#  client:
+#    service-url:
+#      default-zone: 'http://localhost:8761/eureka'
+#  instance:
+#    hostname: localhost
