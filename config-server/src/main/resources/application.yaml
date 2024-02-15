@@ -9,7 +9,7 @@ spring:
       server:
         git:
           uri: 'https://github.com/LuizMartendal/EAD-Application-SpringBoot-Microservices'
-          default-label: config-server
+          default-label: notification
 
 eureka:
   client:
