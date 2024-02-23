@@ -1,4 +1,4 @@
 # EAD-Application-SpringBoot-Microservices
  ###Um sistema de cursos EAD utilizando microservices
 
-## EM DESENVOLVIMENTO - FINALIZANDO O PROJETO EU PRETENDO DETALHA-LO PELO README
+## EM DESENVOLVIMENTO - toda a arquitetura do projeto, com documetação e tutoriais será disponibilizada quando terminar o desenvolvimento
