@@ -2,7 +2,7 @@
 ### Um sistema de cursos EAD utilizando microservices
 
 ## O que esperar deste projeto?
-- API RESTful com Spring Framework
+- API RESTful com Java Spring Boot 
 - Implementação de API Composition Pattern nas comunicações assíncronas
 - Broker Pattern, RabbitMQ (com orquestração e coreografia)
 - Service Registry com Netflix Eureka
