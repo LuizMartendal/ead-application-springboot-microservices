@@ -32,6 +32,9 @@ logging:
     org.hibernate: INFO
 
 ead:
+  api: 
+    url:
+      notification: 'http://ead-notification-service/ead-notification'
   broker:
     exchange:
       notificationCommandExchange: ead.notificationcommand
