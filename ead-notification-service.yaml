@@ -22,7 +22,7 @@ spring:
     ansi:
       enabled: always
   rabbitmq:
-    addresses: amqps://http://54.234.172.100:5672
+    addresses: amqps://54.234.172.100:5672
 
 logging:
   level:
