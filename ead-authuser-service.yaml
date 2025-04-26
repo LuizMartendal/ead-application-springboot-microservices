@@ -19,7 +19,7 @@ spring:
         show_sql: true
         format_sql: true
   rabbitmq:
-    addresses: amqps://gwlhreha:kLcO6DOK_gD7I-6QO01Wswk2bsS-uoEF@rattlesnake.rmq.cloudamqp.com/gwlhreha
+    addresses: amqps://http://54.234.172.100:5672
 
 logging:
   level:
