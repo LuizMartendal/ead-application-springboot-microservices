@@ -19,7 +19,7 @@ spring:
         show_sql: true
         format_sql: true
   rabbitmq:
-    addresses: amqps://http://54.234.172.100:5672
+    addresses: amqps://54.234.172.100:5672
 
 
 ead:
