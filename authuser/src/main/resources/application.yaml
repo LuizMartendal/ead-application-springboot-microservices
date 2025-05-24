@@ -1,67 +1,84 @@
-#server:
-#  port: 8087
-#  servlet:
-#    context-path: '/ead-authuser/'
+server:
+  port: 8087
+  servlet:
+    context-path: '/ead-authuser/'
 
 spring:
   application:
     name: ead-authuser-service
-  config:
-    import: 'configserver:'
   cloud:
     config:
-      discovery:
-        serviceId: ead-config-server
+      enabled: false
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ead-authuser-v2
+    username: postgres
+    password: root
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+  rabbitmq:
+    addresses: amqps://54.234.172.100:5672
 
-#  datasource:
-#    url: jdbc:postgresql://localhost:5432/ead-authuser-v2
-#    username: postgres
-#    password: root
-#    driver-class-name: org.postgresql.Driver
-#  jpa:
-#    hibernate:
-#      ddl-auto: update
-#    properties:
-#      hibernate:
-#        show_sql: true
-#        format_sql: true
-#  rabbitmq:
-#    addresses: amqps://gwlhreha:kLcO6DOK_gD7I-6QO01Wswk2bsS-uoEF@rattlesnake.rmq.cloudamqp.com/gwlhreha
-#
-#logging:
-#  level:
-#    com.ead: TRACE
-#    root: info
-#    org.springframework.web: debug
-#    org.hibernate: info
-#
-#ead:
-#  api:
-#    url:
-#      course: 'http://ead-course-service/ead-course'
-#  broker:
-#    exchange:
-#      userEvent: ead.userevent
-#
-#eureka:
-#  client:
-#    service-url:
-#      default-zone: 'http://localhost:8761/eureka'
-#  instance:
-#    hostname: localhost
-#
-#resilience4j:
-#  circuitbreaker:
-#    instances:
-#      circuitBreakerInstance:
-#        sliding-window-size: 30
-#        permitted-number-of-calls-in-half-open-state: 2
-#        sliding-window-type: TIME_BASED
-#        minimum-number-of-calls: 2
-#        wait-duration-in-open-state: 30s
-#        failure-rate-threshold: 80
-#  retry:
-#    instances:
-#      retryInstance:
-#        max-attempts: 3
-#        wait-duration: 5s
+  security:
+    basic:
+      enabled: false
+    user:
+      name: admin
+      password: admin
+
+eureka:
+  client:
+    service-url:
+      defaultZone: 'http://localhost:8761/eureka/'
+    fetch-registry: true
+    register-with-eureka: true
+
+logging:
+  level:
+    com.ead: TRACE
+    root: info
+    org.springframework.web: debug
+    org.hibernate: info
+    com.netflix.discovery: DEBUG
+    org.springframework.security: DEBUG
+
+ead:
+  api:
+    url:
+      course: 'http://ead-course-service/ead-course'
+  broker:
+    exchange:
+      userEvent: ead.userevent
+
+authuser:
+  refreshscope:
+    name: Luiz Henrique Martendal
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - refresh
+          - health
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      circuitBreakerInstance:
+        sliding-window-size: 30
+        permitted-number-of-calls-in-half-open-state: 2
+        sliding-window-type: TIME_BASED
+        minimum-number-of-calls: 2
+        wait-duration-in-open-state: 30s
+        failure-rate-threshold: 80
+  retry:
+    instances:
+      retryInstance:
+        max-attempts: 3
+        wait-duration: 5s
