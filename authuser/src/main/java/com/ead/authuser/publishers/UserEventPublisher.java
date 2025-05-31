@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.CompletableFuture;
+
 @Component
 public class UserEventPublisher {
 
@@ -19,7 +21,8 @@ public class UserEventPublisher {
 
     public void publishUserEvent(UserEventDto userEventDto, ActionType actionType) {
         userEventDto.setActionType(actionType.toString());
-        rabbitTemplate.convertAndSend(exchangeUserEvent, "", userEventDto);
-
+        CompletableFuture.runAsync(() -> {
+            rabbitTemplate.convertAndSend(exchangeUserEvent, "", userEventDto);
+        });
     }
 }

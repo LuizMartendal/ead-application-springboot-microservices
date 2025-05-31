@@ -54,6 +54,9 @@ ead:
   broker:
     exchange:
       userEvent: ead.userevent
+  auth:
+    jwtSecret: f9373cc7-4e05-48c6-a686-a31a0ef83d2e
+    jwtExpirationMs: 14400000
 
 authuser:
   refreshscope:
